@@ -7,6 +7,8 @@ into a single algorithm aimed torwards NVIDIA's CUDA-platform.
 It's peak performance is reached at 3,4 billion read-candidate-pairs of length 
 64 processed per second.
 
+The error threshold is fixed on e = 2.
+
 Pairs musst be encoded as four integers: Read-High and Read-Low for Reads and 
 Genome-High and Genome-Low for candidateregion. Only four letters alphabets are supported.
 
