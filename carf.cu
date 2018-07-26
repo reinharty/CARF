@@ -2,6 +2,11 @@
 // Created by Yorrick on 24.04.2018.
 //
 
+/**
+ * For the macros to work, you need this hpc_helpers.hpp.
+ * I used the implementation found here:
+ * https://github.com/JGU-HPC/parallelprogrammingbook/blob/master/include/hpc_helpers.hpp
+ */
 #include "hpc_helpers.hpp"
 #include <vector>
 #include <random>
