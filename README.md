@@ -22,4 +22,7 @@ CARF itself does not care about the semantics it processes, as long as it is enc
 Compile carf.cu for words of 64 letters (or carf128.cu respectively).
 To compile I used "nvcc carf.cu -std=c++14 -o carf".
 
-The provided uint128_t datatype nly supports the functions required for CARF to function properly and should not be used as integer outside this project.
+The provided uint128_t datatype only supports the functions required for CARF to function properly and should not be used as integer outside this project.
+
+For the macros to work you need this hpc_helpers.hpp.
+I used the implementation found here: https://github.com/JGU-HPC/parallelprogrammingbook/blob/master/include/hpc_helpers.hpp
