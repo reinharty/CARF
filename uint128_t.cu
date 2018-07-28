@@ -3,6 +3,8 @@
 //
 // This is a PSEUDO uint128_t!
 // It won't work as a correct int or decimal representation as I only care about the binary representation in the CARF context.
+//
+// For the version used to create the published benchmarks, checkout original commit.
 #include <string>
 #include <vector>
 #include <sstream> //istringstream
@@ -34,10 +36,10 @@ struct uint128_t {
         RIGHT = right;
     }
 
-//    __host__ __device__ uint128_t operator=(const uint128_t &n) const {
-//        return uint128_t(n.LEFT,n.RIGHT);
-//    }
-
+    /**
+     * First version, used in the published benchmarks.
+     * a = a>>3;
+     */
     __host__ __device__ uint128_t operator<<(const size_t &n) const {
         if(n >= 128){
             return uint128_t{0, 0};
@@ -50,21 +52,26 @@ struct uint128_t {
         if(n == 64){
             return uint128_t{RIGHT, 0};
         }
-            return uint128_t{(LEFT << n) | (RIGHT >> (64 - n)), RIGHT << n};
+        return uint128_t{(LEFT << n) | (RIGHT >> (64 - n)), RIGHT << n};
     }
 
-//nochmal pruefen
+
+    /**
+     * First version, used in the published benchmarks.
+     */
     __host__ __device__ uint128_t operator>>(const size_t &n) const {
-	if(n >= 128){
-		return uint128_t{0, 0};
-	}
-	
-	if(n > 64){//TODO nochmal pruefen
-		return uint128_t{0, (LEFT>>(n-64))};
-	}
-	if(n == 64){
-		return uint128_t{0, LEFT};
-	}
+        if(n >= 128){
+            return uint128_t{0, 0};
+        }
+
+        if(n > 64){
+            return uint128_t{0, (LEFT>>(n-64))};
+        }
+
+        if(n == 64){
+            return uint128_t{0, LEFT};
+        }
+
         return uint128_t{(LEFT >> n), (LEFT << (64 - n) | (RIGHT >> n))};
     }
 
@@ -81,46 +88,23 @@ struct uint128_t {
     }
 
     __host__ __device__ bool operator!=(const uint128_t &n) const {
-        if(LEFT==n.LEFT and RIGHT==n.RIGHT){
-            return false;
-        } else {
-            return true;
-        }
+        return !(LEFT==n.LEFT and RIGHT==n.RIGHT);
     }
 
     __host__ __device__ bool operator==(const uint64_t &n) const {
-        if(LEFT == 0 and RIGHT == n){
-            return true;
-        } else {
-            return false;
-        }
+        return (LEFT == 0 and RIGHT == n);
     }
 
     __host__ __device__ bool operator==(const uint128_t &n) const {
-        if(LEFT == n.LEFT and RIGHT == n.RIGHT){
-            return true;
-        } else {
-            return false;
-        }
+        return (LEFT == n.LEFT and RIGHT == n.RIGHT);
     }
 
     __host__ __device__ bool operator<(const uint64_t &n) const {
-        if(LEFT > 0){
-            return false;
-        } else if (RIGHT < n){
-            return true;
-        }
-        return false;
+        return(LEFT > 0 or RIGHT < n);
     }
 
     __host__ __device__ bool operator>(const uint64_t &n) const {
-        if(LEFT > 0){
-            return true;
-        } else if (RIGHT > n){
-            return true;
-        }
-
-        return false;
+        return (LEFT > 0 or RIGHT > n);
     }
 
     /**
