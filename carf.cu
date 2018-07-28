@@ -8,6 +8,7 @@
  * https://github.com/JGU-HPC/parallelprogrammingbook/blob/master/include/hpc_helpers.hpp
  */
 #include "hpc_helpers.hpp"
+#include "input_functions.cpp"
 #include <vector>
 #include <random>
 #include <algorithm>
