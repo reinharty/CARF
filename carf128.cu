@@ -20,7 +20,7 @@
  * NUMTHREADS CARF: (352, 480, ) 768
  * NUMTHREADS popCount: 1024 (32 = 125ms to 1024 = 121)
  */
-#define NUMINPUTLINES 198647808
+#define NUMINPUTLINES 1000000
 #define NUMTHREADS (1024)
 
 #define NUMTHREADS1 (128)
@@ -510,25 +510,9 @@ int main(int argc, char * argv[]) {
 
 //    for(int i = 1; i<5; i++){
 //        cout << "Run: " << i << endl;
-    //kernel128_test();
+    kernel128_test();
     kernel128_benchmark();
 //        kernel128_benchmark(1024, 1024);//volta
 //    }
 
-
-//    uint128_t a = 1242;
-//    uint128_t b(2323,14);
-//    uint128_t d(2323,14);
-//    uint128_t c = 1242;
-//
-//    b.printBits();
-//    b=b>>0;
-//    cout << endl;
-//    b.printBits();
-//    cout << endl;
-//
-//    c.printBits();
-//    c=c<<128;
-//    c.printBits();
-//    cout << endl;
 }
