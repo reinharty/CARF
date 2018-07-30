@@ -1,5 +1,4 @@
-﻿//
-// Created by Yorrick on 24.04.2018.
+﻿// BACHELOR ARBEIT ABGABE
 //
 // Functions for CARF with uint64_t.
 //
