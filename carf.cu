@@ -1,6 +1,8 @@
 ﻿//
 // Created by Yorrick on 24.04.2018.
 //
+// Functions for CARF with uint64_t.
+//
 
 /**
  * For the macros to work, you need this hpc_helpers.hpp.
@@ -8,7 +10,7 @@
  * https://github.com/JGU-HPC/parallelprogrammingbook/blob/master/include/hpc_helpers.hpp
  */
 #include "hpc_helpers.hpp"
-#include "input_functions.cpp"
+
 #include <vector>
 #include <random>
 #include <algorithm>
@@ -471,7 +473,7 @@ uint64_t levenstein64(std::bitset<64> rh, std::bitset<64> rl, std::bitset<64> gh
     size_t buf[64+1], best, diag;
     std::iota(buf, buf+64+1, 0);
     for (size_t i = 1; i <= 64; i++) {
-        diag = buf[0]++;
+        diag = buf[0]++; //diagonal auf buffer[0] setzen und buffer[0]+=1
         for (size_t j = 1; j <= 64; j++) {
             best=std::min({buf[j]+1, buf[j-1]+1, diag+!(rh[i-1]==gh[j-1] && rl[i-1]==gl[j-1])});
             diag = buf[j];
@@ -922,6 +924,7 @@ void twoGPUs(){
  *
  * Implementing multiple streams.
  * Erroneous behavior, debuging in progress, must be fixed, major rework needed.
+ * Broken right now to find source of error.
  * @TODO: Reimplement streams for both kernels and find errors.
  * @Deprecated
  */
@@ -988,7 +991,7 @@ void multiStreams(){
     uint64_t * parallel_errorCount = new uint64_t[NUMINPUTLINES];
 
     //create streams
-    const uint64_t numstreams = 1;//replace with define
+    const uint64_t numstreams = 1;//replace with define after debuging
     const uint64_t batchsize = (NUMINPUTLINES/numstreams);
     cudaStream_t streams[numstreams]; CUERR;
     for (uint64_t streamID = 0; streamID < numstreams; streamID++){
@@ -1046,7 +1049,7 @@ int main(int argc, char * argv[]){
 
     twoGPUs();
 
-    //multiStreams(); //broken
+    //multiStreams(); //broken right now to find source of error
 
     printf("\nmain finished\n");
 
